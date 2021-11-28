@@ -25,25 +25,39 @@ namespace WindowsFormsApplication1
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Boolean checkso = true;
             try
             {
                 string a = textBox1.Text;
                 string[] b = a.Split('.'); //cat chuoi
 
-           /* ############## Doi phan nguyen ############*/
+                /* ############## Doi phan nguyen ############*/
 
                 Int32 n = Convert.ToInt32(b[0]);
                 Int32 i = 0;
+                
                 double d, s1 = 0;
-                while (n > 0)
+                if (n < 0)
                 {
-                    d = n % 2;
-                    n = n / 2;
-                    s1 = s1 + d * Math.Pow(10, i);//lay gia tri bin
-                    i++;
-                };
+                    n = n * -1;
+                    checkso = false;
+                    while (n > 0)
+                    {
+                        d = n % 2;
+                        n = n / 2;
+                        s1 = s1 + d * Math.Pow(10, i);//lay gia tri bin
+                        i++;
+                    };
+                }
+                else while (n > 0)
+                    {
+                        d = n % 2;
+                        n = n / 2;
+                        s1 = s1 + d * Math.Pow(10, i);//lay gia tri bin
+                        i++;
+                    };
 
-          /* ############## Doi phan le ############*/
+                /* ############## Doi phan le ############*/
 
                 string f = "0." + b[1];
                 string s2 = "";
@@ -65,14 +79,33 @@ namespace WindowsFormsApplication1
                     }
 
                 };
-                textBox2.Text = Convert.ToString(s1) + "." + s2;
+                if (checkso == true) {
+                    textBox2.Text = Convert.ToString(s1) + "." + s2;
+                }
+                else if(checkso == false){
+                    textBox2.Text = "-"+Convert.ToString(s1) + "." + s2;
+                }
+                checkso = false;
+                
             }
 
             catch
             {
                 Int32 n = Int32.Parse(textBox1.Text);//chuyen chuoi trong textBox1 thanh kieu so nguyen
                 double s = 0, i = 0, k;// s phai la kieu double vi chua ham mu
-                while (n > 0)
+                if (n < 0)
+                {
+                    n = n * -1;
+                    checkso = false;
+                    while (n > 0)
+                    {
+                        k = n % 2;
+                        n = n / 2;
+                        s = s + k * Math.Pow(10, i);// dao nguoc so k vua tinh thanh bin can tim
+                        i++;
+                    };
+                }
+                else while (n > 0)
                 {
                     k = n % 2;
                     n = n / 2;
@@ -80,7 +113,14 @@ namespace WindowsFormsApplication1
                     i++;
                 };
                 string b = Convert.ToString(s);//chuyen s ve kieu string
-                textBox2.Text = b;
+                if (checkso == true)
+                {
+                    textBox2.Text = b;
+                }
+                else if (checkso == false)
+                {
+                    textBox2.Text = "-" + b;
+                }
             }
         }
 
