@@ -21,10 +21,11 @@ namespace WindowsFormsApplication1
 
         }
 
-/* ======================== ĐỔI TỪ DEC SANG BIN =================================== */
+        /* ======================== ĐỔI TỪ DEC SANG BIN =================================== */
 
         private void button1_Click(object sender, EventArgs e)
         {
+
             Boolean checkso = true;
             try
             {
@@ -33,9 +34,9 @@ namespace WindowsFormsApplication1
 
                 /* ############## Doi phan nguyen ############*/
 
-                Int32 n = Convert.ToInt32(b[0]);
-                Int32 i = 0;
-                
+                Int64 n = Convert.ToInt32(b[0]);
+                Int64 i = 0;
+
                 double d, s1 = 0;
                 if (n < 0)
                 {
@@ -62,7 +63,7 @@ namespace WindowsFormsApplication1
                 string f = "0." + b[1];
                 string s2 = "";
                 double g = Convert.ToDouble(f);
-                Int32 w;
+                Int64 w;
                 while (g != 0)
                 {
                     g = g * 2;
@@ -79,19 +80,21 @@ namespace WindowsFormsApplication1
                     }
 
                 };
-                if (checkso == true) {
+                if (checkso == true)
+                {
                     textBox2.Text = Convert.ToString(s1) + "." + s2;
                 }
-                else if(checkso == false){
-                    textBox2.Text = "-"+Convert.ToString(s1) + "." + s2;
+                else if (checkso == false)
+                {
+                    textBox2.Text = "-" + Convert.ToString(s1) + "." + s2;
                 }
                 checkso = false;
-                
+
             }
 
             catch
             {
-                Int32 n = Int32.Parse(textBox1.Text);//chuyen chuoi trong textBox1 thanh kieu so nguyen
+                Int64 n = Int64.Parse(textBox1.Text);//chuyen chuoi trong textBox1 thanh kieu so nguyen
                 double s = 0, i = 0, k;// s phai la kieu double vi chua ham mu
                 if (n < 0)
                 {
@@ -106,12 +109,12 @@ namespace WindowsFormsApplication1
                     };
                 }
                 else while (n > 0)
-                {
-                    k = n % 2;
-                    n = n / 2;
-                    s = s + k * Math.Pow(10, i);// dao nguoc so k vua tinh thanh bin can tim
-                    i++;
-                };
+                    {
+                        k = n % 2;
+                        n = n / 2;
+                        s = s + k * Math.Pow(10, i);// dao nguoc so k vua tinh thanh bin can tim
+                        i++;
+                    };
                 string b = Convert.ToString(s);//chuyen s ve kieu string
                 if (checkso == true)
                 {
@@ -122,12 +125,14 @@ namespace WindowsFormsApplication1
                     textBox2.Text = "-" + b;
                 }
             }
+
         }
 
-/* ================================ ĐỔI TỪ  DEC SANG OCT ==================================== */
+        /* ================================ ĐỔI TỪ  DEC SANG OCT ==================================== */
 
         private void button2_Click(object sender, EventArgs e)
         {
+            Boolean checkso = true;
             try
             {
                 string a = textBox1.Text;
@@ -138,13 +143,25 @@ namespace WindowsFormsApplication1
 
                 Int32 i = 0;
                 double d, s1 = 0;
-                while (n > 0)
+                if (n < 0)
                 {
-                    d = n % 8;
-                    n = n / 8;
-                    s1 = s1 + d * Math.Pow(10, i);//lay gia tri bin
-                    i++;
-                };
+                    n = n * -1;
+                    checkso = false;
+                    while (n > 0)
+                    {
+                        d = n % 8;
+                        n = n / 8;
+                        s1 = s1 + d * Math.Pow(10, i);//lay gia tri bin
+                        i++;
+                    };
+                }
+                else while (n > 0)
+                    {
+                        d = n % 8;
+                        n = n / 8;
+                        s1 = s1 + d * Math.Pow(10, i);//lay gia tri bin
+                        i++;
+                    };
 
                 /* ########## Doi phan le ########### */
 
@@ -169,22 +186,49 @@ namespace WindowsFormsApplication1
                     }
 
                 };
-                textBox2.Text = Convert.ToString(s1) + "." + s2;
+                if (checkso == true)
+                {
+                    textBox2.Text = Convert.ToString(s1) + "." + s2;
+                }
+                else if (checkso == false)
+                {
+                    textBox2.Text = "-" + Convert.ToString(s1) + "." + s2;
+                }
+                checkso = false; ;
 
             }
             catch
             {
                 Int32 n = Int32.Parse(textBox1.Text);//chuyen chuoi trong textBox1 thanh kieu so nguyen
                 double s = 0, i = 0, k;// s phai la kieu double vi chua ham mu
-                while (n > 0)
+                if (n < 0)
                 {
-                    k = n % 8;
-                    n = n / 8;
-                    s = s + k * Math.Pow(10, i);// dao nguoc so k vua tinh thanh oct can tim
-                    i++;
-                };
+                    n = n * -1;
+                    checkso = false;
+                    while (n > 0)
+                    {
+                        k = n % 8;
+                        n = n / 8;
+                        s = s + k * Math.Pow(10, i);// dao nguoc so k vua tinh thanh oct can tim
+                        i++;
+                    };
+                }
+                else while (n > 0)
+                    {
+                        k = n % 8;
+                        n = n / 8;
+                        s = s + k * Math.Pow(10, i);// dao nguoc so k vua tinh thanh oct can tim
+                        i++;
+                    };
                 string b = Convert.ToString(s);//chuyen s ve kieu string
-                textBox2.Text = b;
+                if (checkso == true)
+                {
+                    textBox2.Text = b;
+                }
+                else if (checkso == false)
+                {
+                    textBox2.Text = "-" + b;
+                }
             }
 
 
@@ -194,6 +238,7 @@ namespace WindowsFormsApplication1
 
         private void button3_Click(object sender, EventArgs e)
         {
+            Boolean checkso = true;
             try
             {
                 string m = textBox1.Text;
@@ -207,28 +252,56 @@ namespace WindowsFormsApplication1
                 string s1 = "";
 
                 Int32 i = 0;
-                while (n1 > 0)
+                if (n1 < 0)
                 {
+                    n1 = n1 * -1;
+                    checkso = false;
+                    while (n1 > 0)
+                    {
 
-                    A[i] = Convert.ToString(n1 % 16);  // vi a[i] thuoc kieu string
-                    n1 = n1 / 16;
-                    i++;
-                };
+                        A[i] = Convert.ToString(n1 % 16);  // vi a[i] thuoc kieu string
+                        n1 = n1 / 16;
+                        i++;
+                    };
 
-                //in ra he thap luc phan
-                for (Int32 j = i - 1; j >= 0; j--)// lay j giam de dc he thap luc phan can tim
+                    //in ra he thap luc phan
+                    for (Int32 j = i - 1; j >= 0; j--)// lay j giam de dc he thap luc phan can tim
+                    {
+                        if (A[j] == "10") A[j] = "A";//a[j] la kieu chuoi
+                        if (A[j] == "11") A[j] = "B";
+                        if (A[j] == "12") A[j] = "C";
+                        if (A[j] == "13") A[j] = "D";
+                        if (A[j] == "14") A[j] = "E";
+                        if (A[j] == "15") A[j] = "F";
+
+                        s1 = s1 + A[j];
+                    }
+                }
+                else
                 {
-                    if (A[j] == "10") A[j] = "A";//a[j] la kieu chuoi
-                    if (A[j] == "11") A[j] = "B";
-                    if (A[j] == "12") A[j] = "C";
-                    if (A[j] == "13") A[j] = "D";
-                    if (A[j] == "14") A[j] = "E";
-                    if (A[j] == "15") A[j] = "F";
+                    while (n1 > 0)
+                    {
 
-                    s1 = s1 + A[j];
+                        A[i] = Convert.ToString(n1 % 16);  // vi a[i] thuoc kieu string
+                        n1 = n1 / 16;
+                        i++;
+                    };
+
+                    //in ra he thap luc phan
+                    for (Int32 j = i - 1; j >= 0; j--)// lay j giam de dc he thap luc phan can tim
+                    {
+                        if (A[j] == "10") A[j] = "A";//a[j] la kieu chuoi
+                        if (A[j] == "11") A[j] = "B";
+                        if (A[j] == "12") A[j] = "C";
+                        if (A[j] == "13") A[j] = "D";
+                        if (A[j] == "14") A[j] = "E";
+                        if (A[j] == "15") A[j] = "F";
+
+                        s1 = s1 + A[j];
+                    }
                 }
 
-                textBox2.Text = s1;
+                //textBox2.Text = s1;
 
                 /* ########### Doi phan le ########### */
 
@@ -267,42 +340,87 @@ namespace WindowsFormsApplication1
                             g = g + 1 - w;//g phai tang len 1 roi moi tru cho phan nguyen
 
                     }
-                    textBox2.Text = Convert.ToString(s1) + "." + s2;
+                    //textBox2.Text = Convert.ToString(s1) + "." + s2;
                 };
+                if (checkso == true)
+                {
+                    textBox2.Text = Convert.ToString(s1) + "." + s2;
+                }
+                else if (checkso == false)
+                {
+                    textBox2.Text = "-" + Convert.ToString(s1) + "." + s2;
+                }
+                checkso = false;
 
             }
 
             catch
 
             {
-                string[] a;  // vi he thap luc phan la chuoi
-                a = new string[50];
-                string b = "";
+                string[] A;  // vi he thap luc phan la chuoi
+                A = new string[50];
+                string s1 = "";
 
-                Int32 n = Int32.Parse(textBox1.Text);
+                Int32 n1 = Int32.Parse(textBox1.Text);
                 Int32 i = 0;
-                while (n > 0)
+                if (n1 < 0)
                 {
+                    n1 = n1 * -1;
+                    checkso = false;
+                    while (n1 > 0)
+                    {
 
-                    a[i] = Convert.ToString(n % 16);  // vi a[i] thuoc kieu string
-                    n = n / 16;
-                    i++;
-                };
+                        A[i] = Convert.ToString(n1 % 16);  // vi a[i] thuoc kieu string
+                        n1 = n1 / 16;
+                        i++;
+                    };
 
-                //in ra he thap luc phan
-                for (Int32 j = i - 1; j >= 0; j--)// lay j giam de dc he thap luc phan can tim
+                    //in ra he thap luc phan
+                    for (Int32 j = i - 1; j >= 0; j--)// lay j giam de dc he thap luc phan can tim
+                    {
+                        if (A[j] == "10") A[j] = "A";//a[j] la kieu chuoi
+                        if (A[j] == "11") A[j] = "B";
+                        if (A[j] == "12") A[j] = "C";
+                        if (A[j] == "13") A[j] = "D";
+                        if (A[j] == "14") A[j] = "E";
+                        if (A[j] == "15") A[j] = "F";
+
+                        s1 = s1 + A[j];
+                    }
+                }
+                else
                 {
-                    if (a[j] == "10") a[j] = "A";//a[j] la kieu chuoi
-                    if (a[j] == "11") a[j] = "B";
-                    if (a[j] == "12") a[j] = "C";
-                    if (a[j] == "13") a[j] = "D";
-                    if (a[j] == "14") a[j] = "E";
-                    if (a[j] == "15") a[j] = "F";
+                    while (n1 > 0)
+                    {
 
-                    b = b + a[j];
+                        A[i] = Convert.ToString(n1 % 16);  // vi a[i] thuoc kieu string
+                        n1 = n1 / 16;
+                        i++;
+                    };
+
+                    //in ra he thap luc phan
+                    for (Int32 j = i - 1; j >= 0; j--)// lay j giam de dc he thap luc phan can tim
+                    {
+                        if (A[j] == "10") A[j] = "A";//a[j] la kieu chuoi
+                        if (A[j] == "11") A[j] = "B";
+                        if (A[j] == "12") A[j] = "C";
+                        if (A[j] == "13") A[j] = "D";
+                        if (A[j] == "14") A[j] = "E";
+                        if (A[j] == "15") A[j] = "F";
+
+                        s1 = s1 + A[j];
+                    }
                 }
 
-                textBox2.Text = b;
+                //in ra he thap luc phan
+                if (checkso == true)
+                {
+                    textBox2.Text = s1;
+                }
+                else if (checkso == false)
+                {
+                    textBox2.Text = "-" + s1;
+                }
             }
 
         }
