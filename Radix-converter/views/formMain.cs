@@ -11,121 +11,74 @@ namespace WindowsFormsApplication1
 {
     public partial class formMain : Form
     {
+        int PhanDu(string a)
+        {
+            int res = 0;
+            for (int i = 0; i < a.Length; ++i)
+                res = (res * 10 + (a[i] - '0')) % 2;
+
+            return res;
+        }
+        string ChiaSoLonVoi2(string A)
+        {
+            int hold = 0, s = 0;
+            string res = "";
+
+            for (int i = 0; i < A.Length; ++i)
+            {
+                hold = hold * 10 + (A[i] - '0');
+                s = hold / 2;
+                hold %= 2;
+                res += (char)(s + 48); // Thêm kết quả chia vào bên phải kết quả cuối.
+            }
+
+            // Xóa các chữ 0 vô nghĩa ở bên trái kết quả cuối.
+            while (res.Length > 1 && res[0] == '0')
+                res = res.Remove(0, 1);
+
+            return res;
+        }
+        //su dung de quy
+        string DecToBin(string dec, string bin)
+        {
+            if (dec == "0") return bin;
+            bin = bin + PhanDu(dec).ToString();
+            dec = ChiaSoLonVoi2(dec);
+            return DecToBin(dec, bin);
+        }
+        
         public formMain()
         {
             InitializeComponent();
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
         }
 
         /* ======================== ĐỔI TỪ DEC SANG BIN =================================== */
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-            Boolean checkso = true;
-            try
+            //Boolean checkso = true;
+            string dec = textBox1.Text.ToString();
+            int x = dec.Length;
+            char a = dec[0];
+            if (a == '-') 
             {
-                string a = textBox1.Text;
-                string[] b = a.Split('.'); //cat chuoi
-
-                /* ############## Doi phan nguyen ############*/
-
-                Int64 n = Convert.ToInt32(b[0]);
-                Int64 i = 0;
-
-                double d, s1 = 0;
-                if (n < 0)
-                {
-                    n = n * -1;
-                    checkso = false;
-                    while (n > 0)
-                    {
-                        d = n % 2;
-                        n = n / 2;
-                        s1 = s1 + d * Math.Pow(10, i);//lay gia tri bin
-                        i++;
-                    };
-                }
-                else while (n > 0)
-                    {
-                        d = n % 2;
-                        n = n / 2;
-                        s1 = s1 + d * Math.Pow(10, i);//lay gia tri bin
-                        i++;
-                    };
-
-                /* ############## Doi phan le ############*/
-
-                string f = "0." + b[1];
-                string s2 = "";
-                double g = Convert.ToDouble(f);
-                Int64 w;
-                while (g != 0)
-                {
-                    g = g * 2;
-                    w = Convert.ToInt32(g);//phan nguyen co lam tron
-                    if (w <= g)//lam tron < g
-                    {
-                        s2 = s2 + Convert.ToString(w);
-                        g = g - w;
-                    }
-                    else //lam tron > g
-                    {
-                        s2 = s2 + Convert.ToString(w - 1);//lam tron tang len 1 nen khi in phan nguyen phai tru 1
-                        g = g + 1 - w;//g phai tang len 1 roi moi tru cho phan nguyen
-                    }
-
-                };
-                if (checkso == true)
-                {
-                    textBox2.Text = Convert.ToString(s1) + "." + s2;
-                }
-                else if (checkso == false)
-                {
-                    textBox2.Text = "-" + Convert.ToString(s1) + "." + s2;
-                }
-                checkso = false;
-
+                
+                dec = dec.Substring(1, x-1);
+                string bin = "";
+                bin = DecToBin(dec, bin);
+                char[] arr = bin.ToCharArray(); // chuỗi thành mảng ký tự
+                Array.Reverse(arr); // đảo ngược mảng
+                textBox2.Text = "-"+new string(arr);
             }
-
-            catch
+            else
             {
-                Int64 n = Int64.Parse(textBox1.Text);//chuyen chuoi trong textBox1 thanh kieu so nguyen
-                double s = 0, i = 0, k;// s phai la kieu double vi chua ham mu
-                if (n < 0)
-                {
-                    n = n * -1;
-                    checkso = false;
-                    while (n > 0)
-                    {
-                        k = n % 2;
-                        n = n / 2;
-                        s = s + k * Math.Pow(10, i);// dao nguoc so k vua tinh thanh bin can tim
-                        i++;
-                    };
-                }
-                else while (n > 0)
-                    {
-                        k = n % 2;
-                        n = n / 2;
-                        s = s + k * Math.Pow(10, i);// dao nguoc so k vua tinh thanh bin can tim
-                        i++;
-                    };
-                string b = Convert.ToString(s);//chuyen s ve kieu string
-                if (checkso == true)
-                {
-                    textBox2.Text = b;
-                }
-                else if (checkso == false)
-                {
-                    textBox2.Text = "-" + b;
-                }
+                string bin = "";
+                bin = DecToBin(dec, bin);
+                char[] arr = bin.ToCharArray(); // chuỗi thành mảng ký tự
+                Array.Reverse(arr); // đảo ngược mảng
+                textBox2.Text = new string(arr);
             }
-
+            
         }
 
         /* ================================ ĐỔI TỪ  DEC SANG OCT ==================================== */
