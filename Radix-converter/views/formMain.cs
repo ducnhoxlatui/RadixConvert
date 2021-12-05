@@ -56,28 +56,79 @@ namespace WindowsFormsApplication1
 
         private void button1_Click(object sender, EventArgs e)
         {
+            try
+            {
+                string dec = textBox1.Text.ToString();
+                string[] P = dec.Split('.');
+                int x = P[0].Length;
+                char a = P[0][0];
+                string s1 = "";
+                if (a == '-')
+                {
+
+                    P[0] = P[0].Substring(1, x - 1);
+                    string bin = "";
+                    bin = DecToBin(P[0], bin);
+                    char[] arr = bin.ToCharArray(); // chuỗi thành mảng ký tự
+                    Array.Reverse(arr); // đảo ngược mảng
+                    s1 = "-" + new string(arr);
+                }
+                else
+                {
+                    string bin = "";
+                    bin = DecToBin(P[0], bin);
+                    char[] arr = bin.ToCharArray(); // chuỗi thành mảng ký tự
+                    Array.Reverse(arr); // đảo ngược mảng
+                    s1 =new string(arr);
+                }
+                string f = "0." + P[1];
+                string s2 = "";
+                double g = Convert.ToDouble(f);
+                Int64 w;
+                while (g != 0)
+                {
+                    g = g * 2;
+                    w = Convert.ToInt32(g);//phan nguyen co lam tron
+                    if (w <= g)//lam tron < g
+                    {
+                        s2 = s2 + Convert.ToString(w);
+                        g = g - w;
+                    }
+                    else //lam tron > g
+                    {
+                        s2 = s2 + Convert.ToString(w - 1);//lam tron tang len 1 nen khi in phan nguyen phai tru 1
+                        g = g + 1 - w;//g phai tang len 1 roi moi tru cho phan nguyen
+                    }
+
+                };
+                textBox2.Text = s1+"."+s2;
+
+            }
+            catch {
+                string dec = textBox1.Text.ToString();
+                int x = dec.Length;
+                char a = dec[0];
+                if (a == '-')
+                {
+
+                    dec = dec.Substring(1, x - 1);
+                    string bin = "";
+                    bin = DecToBin(dec, bin);
+                    char[] arr = bin.ToCharArray(); // chuỗi thành mảng ký tự
+                    Array.Reverse(arr); // đảo ngược mảng
+                    textBox2.Text = "-" + new string(arr);
+                }
+                else
+                {
+                    string bin = "";
+                    bin = DecToBin(dec, bin);
+                    char[] arr = bin.ToCharArray(); // chuỗi thành mảng ký tự
+                    Array.Reverse(arr); // đảo ngược mảng
+                    textBox2.Text = new string(arr);
+                }
+            }
             //Boolean checkso = true;
-            string dec = textBox1.Text.ToString();
-            int x = dec.Length;
-            char a = dec[0];
-            if (a == '-') 
-            {
-                
-                dec = dec.Substring(1, x-1);
-                string bin = "";
-                bin = DecToBin(dec, bin);
-                char[] arr = bin.ToCharArray(); // chuỗi thành mảng ký tự
-                Array.Reverse(arr); // đảo ngược mảng
-                textBox2.Text = "-"+new string(arr);
-            }
-            else
-            {
-                string bin = "";
-                bin = DecToBin(dec, bin);
-                char[] arr = bin.ToCharArray(); // chuỗi thành mảng ký tự
-                Array.Reverse(arr); // đảo ngược mảng
-                textBox2.Text = new string(arr);
-            }
+            
             
         }
 
